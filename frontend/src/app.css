@@ -1,0 +1,155 @@
+/* Casa da Vó — warm earthy palette */
+:root {
+  --bg:        #fdf6ee;
+  --bg-card:   #fff9f2;
+  --primary:   #8b5e3c;
+  --primary-d: #6b4828;
+  --accent:    #c98a2e;
+  --text:      #3b2f1e;
+  --text-muted:#7a6452;
+  --border:    #e0cdb8;
+  --danger:    #b94040;
+  --success:   #4a8c5c;
+  --pending:   #c98a2e;
+  --radius:    8px;
+  --shadow:    0 2px 8px rgba(59,47,30,.12);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4 { font-family: Georgia, serif; font-weight: bold; }
+
+a { color: var(--primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+button, .btn {
+  cursor: pointer;
+  border: none;
+  border-radius: var(--radius);
+  padding: .5rem 1.2rem;
+  font-size: .95rem;
+  font-family: inherit;
+  transition: background .15s, opacity .15s;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+}
+.btn-primary:hover { background: var(--primary-d); }
+
+.btn-danger {
+  background: var(--danger);
+  color: #fff;
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+.btn-ghost:hover { background: var(--border); }
+
+input, select, textarea {
+  width: 100%;
+  padding: .5rem .75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: #fff;
+  font-family: inherit;
+  font-size: .95rem;
+  color: var(--text);
+}
+input:focus, select:focus, textarea:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+label { display: block; font-size: .85rem; margin-bottom: .25rem; color: var(--text-muted); }
+
+.form-group { margin-bottom: 1rem; }
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+.badge {
+  display: inline-block;
+  padding: .2rem .6rem;
+  border-radius: 999px;
+  font-size: .78rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+.badge-pending  { background: #fef3cd; color: #856404; }
+.badge-confirmed{ background: #d1e7dd; color: #0f5132; }
+.badge-refused  { background: #f8d7da; color: #842029; }
+
+.error { color: var(--danger); font-size: .9rem; margin-top: .5rem; }
+
+nav {
+  background: var(--primary);
+  color: #fff;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+nav .brand { font-size: 1.3rem; font-weight: bold; color: #fff; }
+nav a { color: rgba(255,255,255,.85); font-size: .95rem; }
+nav a:hover { color: #fff; }
+nav .spacer { flex: 1; }
+nav .user-info { font-size: .85rem; opacity: .8; }
+
+.page {
+  max-width: 960px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: .6rem .8rem; text-align: left; border-bottom: 1px solid var(--border); }
+th { font-size: .82rem; text-transform: uppercase; letter-spacing: .04em; color: var(--text-muted); }
+
+.table-map {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.table-tile {
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: .75rem;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+  background: #fff;
+}
+.table-tile.available   { border-color: var(--success); }
+.table-tile.occupied    { border-color: var(--danger); background: #fff0f0; cursor: default; }
+.table-tile.inactive    { border-color: var(--border); background: #f5f0eb; cursor: default; opacity: .6; }
+.table-tile.selected    { border-color: var(--accent); background: #fff8ee; }
+.table-tile .tnum       { font-size: 1.2rem; font-weight: bold; }
+.table-tile .tloc       { font-size: .7rem; color: var(--text-muted); text-transform: uppercase; }
+.table-tile .tcap       { font-size: .75rem; color: var(--text-muted); }
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}

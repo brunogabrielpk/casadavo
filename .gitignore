@@ -1,0 +1,11 @@
+# backend
+backend/casadavo.db
+backend/server
+
+# frontend
+frontend/node_modules/
+frontend/.svelte-kit/
+frontend/build/
+
+# env
+.env
