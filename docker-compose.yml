@@ -3,9 +3,7 @@ version: "3.9"
 services:
 
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+    image: pokkew/casadavo-backend:latest
     container_name: casadavo-backend
     restart: unless-stopped
     environment:
@@ -23,9 +21,7 @@ services:
       retries: 3
 
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+    image: pokkew/casadavo-frontend:latest
     container_name: casadavo-frontend
     restart: unless-stopped
     ports:
