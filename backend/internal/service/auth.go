@@ -22,7 +22,7 @@ func NewAuthService(users *repository.UserRepo, secret, adminEmail string) *Auth
 	return &AuthService{users: users, jwtSecret: []byte(secret), adminEmail: adminEmail}
 }
 
-func (s *AuthService) Register(name, email, password, role string) (*model.User, error) {
+func (s *AuthService) Register(name, email, phone, password, role string) (*model.User, error) {
 	existing, err := s.users.FindByEmail(email)
 	if err != nil {
 		return nil, err
@@ -39,7 +39,7 @@ func (s *AuthService) Register(name, email, password, role string) (*model.User,
 	} else if role == "" {
 		role = "cliente"
 	}
-	u := &model.User{Name: name, Email: email, Password: string(hash), Role: role}
+	u := &model.User{Name: name, Email: email, Phone: phone, Password: string(hash), Role: role}
 	if err := s.users.Create(u); err != nil {
 		return nil, err
 	}

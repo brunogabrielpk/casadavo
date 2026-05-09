@@ -14,7 +14,7 @@ func NewReservationRepo(db *sql.DB) *ReservationRepo { return &ReservationRepo{d
 const detailQuery = `
 SELECT r.id, r.user_id, r.table_id, r.slot_id, r.date, r.party_size, r.status,
        COALESCE(r.notes,''), r.created_at, r.updated_at,
-       u.name, u.email,
+       u.name, u.email, u.phone,
        t.number, t.location,
        ts.slot_time
 FROM reservations r
@@ -27,7 +27,7 @@ func scanDetail(rows *sql.Rows) (model.ReservationDetail, error) {
 	err := rows.Scan(
 		&d.ID, &d.UserID, &d.TableID, &d.SlotID, &d.Date, &d.PartySize, &d.Status,
 		&d.Notes, &d.CreatedAt, &d.UpdatedAt,
-		&d.UserName, &d.UserEmail,
+		&d.UserName, &d.UserEmail, &d.UserPhone,
 		&d.TableNum, &d.Location,
 		&d.SlotTime,
 	)

@@ -21,6 +21,7 @@ func (h *AuthHandler) Register(w http.ResponseWriter, r *http.Request) {
 	var body struct {
 		Name     string `json:"name"`
 		Email    string `json:"email"`
+		Phone    string `json:"phone"`
 		Password string `json:"password"`
 		Role     string `json:"role"`
 	}
@@ -32,7 +33,7 @@ func (h *AuthHandler) Register(w http.ResponseWriter, r *http.Request) {
 		errResp(w, http.StatusBadRequest, "name, email and password are required")
 		return
 	}
-	u, err := h.svc.Register(body.Name, body.Email, body.Password, body.Role)
+	u, err := h.svc.Register(body.Name, body.Email, body.Phone, body.Password, body.Role)
 	if err != nil {
 		errResp(w, http.StatusConflict, err.Error())
 		return

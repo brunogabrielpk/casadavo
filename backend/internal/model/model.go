@@ -6,6 +6,7 @@ type User struct {
 	ID        int64     `json:"id"`
 	Name      string    `json:"name"`
 	Email     string    `json:"email"`
+	Phone     string    `json:"phone"`
 	Password  string    `json:"-"`
 	Role      string    `json:"role"` // "cliente" | "gerente"
 	CreatedAt time.Time `json:"created_at"`
@@ -55,6 +56,7 @@ type ReservationDetail struct {
 	Reservation
 	UserName  string `json:"user_name"`
 	UserEmail string `json:"user_email"`
+	UserPhone string `json:"user_phone"`
 	TableNum  int    `json:"table_number"`
 	Location  string `json:"location"`
 	SlotTime  string `json:"slot_time"`

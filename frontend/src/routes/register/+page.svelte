@@ -5,6 +5,7 @@
 
   let name = '';
   let email = '';
+  let phone = '';
   let password = '';
   let error = '';
   let loading = false;
@@ -13,7 +14,7 @@
     error = '';
     loading = true;
     try {
-      await api.post('/auth/register', { name, email, password });
+      await api.post('/auth/register', { name, email, phone, password });
       const data = await api.post('/auth/login', { email, password });
       auth.login(data.token, data.user);
       goto('/reservations');
@@ -36,6 +37,10 @@
       <div class="form-group">
         <label for="email">E-mail</label>
         <input id="email" type="email" bind:value={email} required />
+      </div>
+      <div class="form-group">
+        <label for="phone">Telefone</label>
+        <input id="phone" type="tel" bind:value={phone} placeholder="(00) 00000-0000" />
       </div>
       <div class="form-group">
         <label for="password">Senha</label>

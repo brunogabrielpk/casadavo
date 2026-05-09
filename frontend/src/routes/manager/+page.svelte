@@ -69,6 +69,7 @@
             <th>Horário</th>
             <th>Mesa</th>
             <th>Cliente</th>
+            <th>Telefone</th>
             <th>Pessoas</th>
             <th>Observações</th>
             <th>Status</th>
@@ -85,6 +86,7 @@
                 <div>{r.user_name}</div>
                 <div style="font-size:.8rem;color:var(--text-muted)">{r.user_email}</div>
               </td>
+              <td style="font-size:.85rem">{r.user_phone || '—'}</td>
               <td>{r.party_size}</td>
               <td style="font-size:.85rem;max-width:160px">{r.notes || '—'}</td>
               <td><span class="badge badge-{r.status}">{statusLabel(r.status)}</span></td>
