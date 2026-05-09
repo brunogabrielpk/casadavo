@@ -34,6 +34,11 @@ func (r *UserRepo) FindByEmail(email string) (*model.User, error) {
 	return u, err
 }
 
+func (r *UserRepo) EnsureAdminRole(email string) error {
+	_, err := r.db.Exec(`UPDATE users SET role='gerente' WHERE email=?`, email)
+	return err
+}
+
 func (r *UserRepo) FindByID(id int64) (*model.User, error) {
 	u := &model.User{}
 	err := r.db.QueryRow(

@@ -28,6 +28,7 @@ func main() {
 	if port == "" {
 		port = "8080"
 	}
+	adminEmail := os.Getenv("ADMIN_EMAIL")
 
 	db, err := repository.Open(dbPath)
 	if err != nil {
@@ -38,13 +39,19 @@ func main() {
 	mw.SetSecret(jwtSecret)
 
 	userRepo := repository.NewUserRepo(db)
+
+	if adminEmail != "" {
+		if err := userRepo.EnsureAdminRole(adminEmail); err != nil {
+			log.Printf("warn: could not enforce admin role for %s: %v", adminEmail, err)
+		}
+	}
 	tableRepo := repository.NewTableRepo(db)
 	availRepo := repository.NewAvailabilityRepo(db)
 	slotRepo := repository.NewTimeSlotRepo(db)
 	resRepo := repository.NewReservationRepo(db)
 	layoutRepo := repository.NewLayoutRepo(db)
 
-	authSvc := service.NewAuthService(userRepo, jwtSecret)
+	authSvc := service.NewAuthService(userRepo, jwtSecret, adminEmail)
 	resSvc := service.NewReservationService(resRepo, slotRepo, availRepo, layoutRepo)
 
 	authH := handler.NewAuthHandler(authSvc, userRepo)

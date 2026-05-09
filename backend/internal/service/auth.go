@@ -13,12 +13,13 @@ import (
 )
 
 type AuthService struct {
-	users     *repository.UserRepo
-	jwtSecret []byte
+	users      *repository.UserRepo
+	jwtSecret  []byte
+	adminEmail string
 }
 
-func NewAuthService(users *repository.UserRepo, secret string) *AuthService {
-	return &AuthService{users: users, jwtSecret: []byte(secret)}
+func NewAuthService(users *repository.UserRepo, secret, adminEmail string) *AuthService {
+	return &AuthService{users: users, jwtSecret: []byte(secret), adminEmail: adminEmail}
 }
 
 func (s *AuthService) Register(name, email, password, role string) (*model.User, error) {
@@ -33,7 +34,9 @@ func (s *AuthService) Register(name, email, password, role string) (*model.User,
 	if err != nil {
 		return nil, err
 	}
-	if role == "" {
+	if s.adminEmail != "" && email == s.adminEmail {
+		role = "gerente"
+	} else if role == "" {
 		role = "cliente"
 	}
 	u := &model.User{Name: name, Email: email, Password: string(hash), Role: role}
