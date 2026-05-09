@@ -29,7 +29,7 @@ services:
       - "127.0.0.1:8081:8080"
     volumes:
       - sqlite_data:/data
-    command: ["-H", "0.0.0.0", "-p", "8080", "-x", "/data/casadavo.db"]
+    command: ["sqlite_web", "-H", "0.0.0.0", "-p", "8080", "-x", "/data/casadavo.db"]
     depends_on:
       backend:
         condition: service_healthy
