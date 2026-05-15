@@ -70,3 +70,20 @@ func (h *AuthHandler) Me(w http.ResponseWriter, r *http.Request) {
 	}
 	writeJSON(w, http.StatusOK, u)
 }
+
+func (h *AuthHandler) UpdateMe(w http.ResponseWriter, r *http.Request) {
+	c := mw.GetClaims(r)
+	var body struct {
+		Phone string `json:"phone"`
+	}
+	if err := readJSON(r, &body); err != nil {
+		errResp(w, http.StatusBadRequest, "invalid body")
+		return
+	}
+	if err := h.users.UpdatePhone(c.UserID, body.Phone); err != nil {
+		errResp(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+	u, _ := h.users.FindByID(c.UserID)
+	writeJSON(w, http.StatusOK, u)
+}

@@ -24,11 +24,17 @@ var jwtSecret []byte
 
 func SetSecret(s string) { jwtSecret = []byte(s) }
 
+func jsonError(w http.ResponseWriter, status int, msg string) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(status)
+	w.Write([]byte(`{"error":"` + msg + `"}`))
+}
+
 func Auth(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		header := r.Header.Get("Authorization")
 		if !strings.HasPrefix(header, "Bearer ") {
-			http.Error(w, "unauthorized", http.StatusUnauthorized)
+			jsonError(w, http.StatusUnauthorized, "unauthorized")
 			return
 		}
 		tokenStr := strings.TrimPrefix(header, "Bearer ")
@@ -37,7 +43,7 @@ func Auth(next http.Handler) http.Handler {
 			return jwtSecret, nil
 		})
 		if err != nil || !token.Valid {
-			http.Error(w, "unauthorized", http.StatusUnauthorized)
+			jsonError(w, http.StatusUnauthorized, "unauthorized")
 			return
 		}
 		ctx := context.WithValue(r.Context(), ClaimsKey, claims)
@@ -50,7 +56,7 @@ func RequireRole(role string) func(http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			c := GetClaims(r)
 			if c == nil || c.Role != role {
-				http.Error(w, "forbidden", http.StatusForbidden)
+				jsonError(w, http.StatusForbidden, "forbidden")
 				return
 			}
 			next.ServeHTTP(w, r)

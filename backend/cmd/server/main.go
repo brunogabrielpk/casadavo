@@ -79,6 +79,7 @@ func main() {
 		r.Post("/auth/register", authH.Register)
 		r.Post("/auth/login", authH.Login)
 		r.With(mw.Auth).Get("/auth/me", authH.Me)
+		r.With(mw.Auth).Put("/auth/me", authH.UpdateMe)
 
 		r.Group(func(r chi.Router) {
 			r.Use(mw.Auth)

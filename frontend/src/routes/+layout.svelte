@@ -27,7 +27,7 @@
     <a href="/reserve">Nova Reserva</a>
   {/if}
   <span class="spacer"></span>
-  <span class="user-info">{$auth.user?.name}</span>
+  <a href="/profile" style="color:#fff;font-size:.9rem">{$auth.user?.name}</a>
   <button class="btn btn-ghost" style="color:#fff;border-color:rgba(255,255,255,.4)" on:click={logout}>Sair</button>
 </nav>
 {/if}
